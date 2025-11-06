@@ -14,3 +14,81 @@ Utilizzare https://www.drawio.com/ per la creazione dello schema.
 Esportare quindi il diagramma in png e caricarlo nella repo inserendolo anche in un file index.html tramite il tag img per poterne vedere al volo un anteprima come mostrato a lezione.
 ### FINE TESTO 
 
+### Tables 
+-dipartimenti
+-corsi_laurea
+-corsi
+-insegnanti
+-appelli_esame
+-studenti
+### Possibili relazioni: 
+dipartimenti- corsi_laurea 1-* un dipartimento offre più corsi di laurea e un corso di laurea è di un solo dipartimento
+corsi_laurea-corsi un corso di laurea ha molti corsi e un corso può appartenere a più corsi di laurea *-* TABELLA PIVOT
+corsi_insegnanti un corso può essere tenuto da più insegnanti e un insegnate può fare piu di un corso *-* TABELLA PIVOT
+corsi- appelli_esame un corso ha più appelli di esame e un appello appartiene ad un corso 1-*
+studenti-corsi_laurea uno studente può frequentare un corso di laurea, ma un cors odi laurea è frequentato da più studenti *-1 
+studenti-appelli_esame uno studente può partecipare a più appelli e ad un appello posono partecipare più studenti *-* TABELLA PIVOT
+
+### Table: dipartimenti
+id: INT|| BIGINT  AI NOTNULL UNIQUE PK INDEX
+nome: VARCHAR(100) UNIQUE NOT NULL
+indirizzo_sede: VARCHAR(75) NULL 
+
+
+### Table: corsi_laurea
+id: PK BIGINT UNIQUE INDEX
+dipartimento_id: NOT NULL FK BIGINT UNIQUE INDEX
+nome: VARCHAR(30) NOT NULL INDEX 
+
+### Table: corsi
+id:PK BIGINT UNIQUE INDEX PK INDEX
+codice: VARCHAR(15) UNIQUE NOT NULL INDEX
+cfu: SMALLINT 
+nome: VARCHAR(100) NOT NULL 
+prerequisiti: VARCHAR(200) NULL 
+tipo_esame: VARCHAR(200) NULL
+
+### Table: insegnanti 
+id:PK BIGINT UNIQUE INDEX PK INDEX
+nome: VARCHAR(50)
+COGNOME: varchar(50)
+matricola: VARCHAR(20) UNIQUE NOT NULL INDEX
+email: VARCHAR(60) UNIQUE NOT NULL INDEX
+
+## Table: studenti 
+id:PK BIGINT UNIQUE INDEX PK INDEX
+corsi_laurea.id: FK BIGINT
+nome: VARCHAR(50)
+COGNOME: varchar(50)
+matricola: VARCHAR(20) UNIQUE NOT NULL INDEX
+email: VARCHAR(60) UNIQUE NOT NULL INDEX
+
+### Pivot tables 
+
+ponte corsi-insegnanti 
+
+name_table: corso_insegnante 
+corso_id: FK BIGINT NOTNULL 
+docente_id: FK BIGINT NOTNULL 
+ruolo: VARCHAR(30) NULL 
+
+ponte corsi_laurea-corsi
+
+name_table:corso_corso_laurea  
+cdl_id: FK BIGINT NOTNULL 
+corso_id: FK BIGINT NOTNULL 
+anno: SMALLINT 
+frequenza_obbligatoria: BOOLEANO 
+semestre: SMALLINT 
+
+
+pote studenti-appelli_esame
+
+name_table:appello_esame_studente 
+
+studente_id: FK BIGINT NOTNULL
+appello_id: FK BIGINT NOTNULL
+esito: VARCHAR(20) NOT NULL 
+voto: SMALLINT  NOT NULL 
+lode: BOOLEANO 
+
