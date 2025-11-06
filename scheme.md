@@ -22,12 +22,12 @@ Esportare quindi il diagramma in png e caricarlo nella repo inserendolo anche in
 -appelli_esame
 -studenti
 ### Possibili relazioni: 
-dipartimenti- corsi_laurea 1-* un dipartimento offre più corsi di laurea e un corso di laurea è di un solo dipartimento
-corsi_laurea-corsi un corso di laurea ha molti corsi e un corso può appartenere a più corsi di laurea *-* TABELLA PIVOT
-corsi_insegnanti un corso può essere tenuto da più insegnanti e un insegnate può fare piu di un corso *-* TABELLA PIVOT
-corsi- appelli_esame un corso ha più appelli di esame e un appello appartiene ad un corso 1-*
-studenti-corsi_laurea uno studente può frequentare un corso di laurea, ma un cors odi laurea è frequentato da più studenti *-1 
-studenti-appelli_esame uno studente può partecipare a più appelli e ad un appello posono partecipare più studenti *-* TABELLA PIVOT
+---dipartimenti- corsi_laurea 1-* un dipartimento offre più corsi di laurea e un corso di laurea è di un solo dipartimento
+----corsi_laurea-corsi un corso di laurea ha molti corsi e un corso può appartenere a più corsi di laurea *-* TABELLA PIVOT
+---corsi_insegnanti un corso può essere tenuto da più insegnanti e un insegnate può fare piu di un corso *-* TABELLA PIVOT
+----corsi- appelli_esame un corso ha più appelli di esame e un appello appartiene ad un corso 1-*
+---studenti-corsi_laurea uno studente può frequentare un corso di laurea, ma un cors odi laurea è frequentato da più studenti *-1 
+---studenti-appelli_esame uno studente può partecipare a più appelli e ad un appello posono partecipare più studenti *-* TABELLA PIVOT
 
 ### Table: dipartimenti
 id: INT|| BIGINT  AI NOTNULL UNIQUE PK INDEX
@@ -47,6 +47,7 @@ cfu: SMALLINT
 nome: VARCHAR(100) NOT NULL 
 prerequisiti: VARCHAR(200) NULL 
 tipo_esame: VARCHAR(200) NULL
+appelli_id FK NOT NULL UNIQUE
 
 ### Table: insegnanti 
 id:PK BIGINT UNIQUE INDEX PK INDEX
@@ -62,6 +63,14 @@ nome: VARCHAR(50)
 COGNOME: varchar(50)
 matricola: VARCHAR(20) UNIQUE NOT NULL INDEX
 email: VARCHAR(60) UNIQUE NOT NULL INDEX
+
+## Table: appelli_esame
+
+id:PK BIGINT UNIQUE INDEX PK INDEX
+semestre: SMALLINT 
+straordinario: BOOLEANO 
+remoto: DEFAULT
+
 
 ### Pivot tables 
 
